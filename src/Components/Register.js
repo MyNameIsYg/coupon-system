@@ -1,101 +1,69 @@
-// SignupLogin.js
+import React, { useState } from 'react';
+import Login from './Login';
+import { useNavigate } from 'react-router-dom';
+import Signup from './Signup';
 
-import React, { useState } from "react";
-import { FormLabel } from "react-bootstrap";
+function Register() {
+  const [isLogin, setIsLogin] = useState(true);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  const [response, setResponse] = useState({});
 
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
+  const navigate = useNavigate();
 
-function Register({ onLogin, onSignup }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isNewUser, setIsNewUser] = useState(false); // Track if the user is new or existing
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // TODO: אימות נתונים ושליחת בקשה לשרת (הרשמה/כניסה)
+    if (isLogin) {
+      setResponse(Login(formData.email, formData.password));
+    } else {
+      setResponse(Signup(formData.email, formData.password));
+    }
 
-  const handleLogin = () => {
-    onLogin(email, password);
+    if (response.status !== 200) {
+      setIsLogin(false);
+    }
+    if (isLogin) {
+      localStorage.setItem('userData', JSON.stringify(response));
+      navigate('/home');
+    } else {
+      alert("email or password incorrect, please try again or signup if you don't have an account");
+      
+    }
   };
 
-  const handleSignup = () => {
-    onSignup(email, password);
+  const handleSwitch = () => {
+    setIsLogin(!isLogin);
   };
-
-  const handleToggleForm = () => {
-    setIsNewUser(!isNewUser);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
 
   return (
-    <Form>
-      <h2>{isNewUser ? "Signup" : "Login"}</h2>
-      <Col className="mb-3">
-        <Form.Group as={Row} controlId="formGridEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            style={{ width: "25%", margin: "auto" }}
-            value={email}
-            onChange={handleEmailChange} />
-        </Form.Group>
-
-        <Form.Group as={Row} controlId="formGridPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            style={{ width: "25%", margin: "auto" }} 
-            value={password} 
-            onChange={handlePasswordChange}/>
-        </Form.Group>
-      </Col>
-
-      {isNewUser ? (
-        <Button variant="primary" type="submit"
-          onClick={handleSignup}>
-          Signup
-        </Button>
-      ) : (
-        <Button variant="primary" type="submit"
-          onClick={handleLogin}>
-          Login
-        </Button>
-      )}
-      <br />
-      {/* <Button variant="primary" type="submit"
-        onClick={handleToggleForm}>
-        {isNewUser
-          ? "Already have an account? Login"
-          : "Don't have an account? Signup"}
-      </Button> */}
-      {
-        isNewUser
-          ? <>
-            <FormLabel>Already have an account?</FormLabel><br />
-            <Button variant="primary" type="submit"
-              onClick={handleToggleForm}>
-              Login
-            </Button>
-          </>
-          : <>
-            <FormLabel>Don't have an account?</FormLabel><br />
-            <Button variant="primary" type="submit"
-              onClick={handleToggleForm}>
-              Signup
-            </Button>
-          </>
-      }
-
-    </Form>
+    <div className="login-signup-container">
+      <h1>{isLogin ? 'Login' : 'Signup'}</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="email"
+          name='email'
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+        />
+        <input
+          type="password"
+          placeholder="password"
+          name='password'
+          value={formData.password}
+          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+        />
+        <button type="submit">
+          {isLogin ? 'Login' : 'Signup'}
+        </button>
+      </form>
+      <p onClick={handleSwitch}><u>
+        {isLogin ? 'Not registered yet? Sign up' : 'Already registered? Login'}
+      </u></p>
+    </div>
   );
 }
 

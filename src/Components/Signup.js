@@ -6,6 +6,6 @@ export default async function Signup(email, password){
         const response = await axios.post(`${BASE_URL}/signup`, { email, password });
         return response.data;
     } catch (error) {
-        throw error.response.data.message;
+        return error.response.data.message;
     }
 };
