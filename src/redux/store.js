@@ -1,5 +1,5 @@
 import { createStore } from "redux";
-import allReducers from "./reducers"
+import allReducers from "./reducer/index"
 
 // Create a Redux store with all reducers
 // and export it

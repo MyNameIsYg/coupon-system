@@ -5,8 +5,10 @@ import userReducer from "./userReducer";
 
 
 
-export const allReducers = combineReducers({
+const allReducers = combineReducers({
     coupenReducer: couponReducer,
     storeReducer: storeReducer,
     userReducer: userReducer
-})
+});
+
+export default allReducers

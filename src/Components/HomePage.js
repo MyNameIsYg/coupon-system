@@ -9,7 +9,6 @@ function HomePage({ user, onLogout }) {
 
 
     useEffect(() => {
-        // TODO: קבלת קופונים שנרכשו מהשרת
         axios.get(BASE_URL+'/coupons').then((response) => {
             setCoupons(response.data);
         });

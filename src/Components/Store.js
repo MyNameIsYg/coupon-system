@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-function Store({ coupons, onPurchase }) {
+function Store() {
     const [selectedCoupon, setSelectedCoupon] = useState(null);
+
+    const coupons = useDispatch((state) => state.coupons);
 
     useEffect(() => {
         // TODO: קבלת קופונים זמינים מהשרת
@@ -9,7 +12,7 @@ function Store({ coupons, onPurchase }) {
 
     const handlePurchase = (coupon) => {
         // TODO: שליחת בקשה לרכישת קופון לשרת
-        onPurchase(coupon);
+       // onPurchase(coupon);
     };
 
     return (
