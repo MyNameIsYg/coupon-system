@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import BASE_URL from './BaseUrl';
 import Coupon from './Coupon';
+import Menu from './Menu';
+import urls from './BaseUrl';
 
 function HomePage({ user, onLogout }) {
     const [coupons, setCoupons] = useState([]);
@@ -9,30 +10,23 @@ function HomePage({ user, onLogout }) {
 
 
     useEffect(() => {
-        axios.get(BASE_URL+'/coupons').then((response) => {
-            setCoupons(response.data);
+        axios.get(`${urls.URL_API}/coupon/customers`).then((response) => {
+            setCoupons(response.json);
         });
 
     }, []);
 
-    const handleCouponClick = (coupon) => {
-        setSelectedCoupon(coupon);
-    };
+
 
     return (
-        <div className="home-container">
-            <h1>ברוכים הבאים, {user.name}!</h1>
-            <div className="coupons-container">
-                {coupons.map((coupon) => (
-                    <div className="coupon-card" key={coupon.id} onClick={() => handleCouponClick(coupon)}>
-                        <img src={coupon.image} alt={coupon.title} />
-                        <h3>{coupon.title}</h3>
-                    </div>
+        <>
+            <Menu />
+            <div className="home-container">
+                {coupons?.map((coupon) => (
+                    <Coupon key={coupon.id} coupon={coupon} />
                 ))}
             </div>
-            <button onClick={onLogout}>התנתקות</button>
-            {selectedCoupon && <Coupon coupon={selectedCoupon} />}
-        </div>
+        </>
     );
 }
 
