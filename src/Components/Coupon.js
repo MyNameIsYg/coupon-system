@@ -1,6 +1,17 @@
+import axios from 'axios';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import urls from './BaseUrl';
 
-function Coupon({ coupon }) {
+function Coupon({key, coupon }) {
+
+    const navigate = useNavigate();
+
+    const handlePurchase = () => {
+        axios.put(`${urls.URL_API}/coupon/purchase/${key}`);
+            
+    }
+
     return (
         <div className="coupon-details-container">
             <img src={coupon.image} alt={coupon.title} />
@@ -12,6 +23,8 @@ function Coupon({ coupon }) {
             <p>
                 <strong>תוקף:</strong> {coupon.expirationDate}
             </p>
+            <button onClick={() => handlePurchase()}>רכישה</button>
+            <button onClick={() => navigate('/home')}>חזרה</button>
         </div>
     );
 }
