@@ -1,55 +1,41 @@
-// import BASE_URL from './BaseUrl';
-// import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import urls from './BaseUrl';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/action/registerAction';
+import { useState } from 'react';
 
-// export default async function Login(email, password) {
-//     try {
-//         const response = await axios.post(`${BASE_URL}/login`, { email, password });
-//         return response.data;
-//     } catch (error) {
-//         throw error.response.data.message;
-//     }
-// };
-
-// components/LoginPage.js
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-
-const LoginPage = () => {
-    const [username, setUsername] = useState('');
+export default function Login() {
+    
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const history = useHistory();
+    const [msg, setMsg] = useState({});
 
-    const handleLogin = () => {
-        // Implement login logic here, possibly making an API call
-        // If successful, navigate to Home page
-        history.push('/home');
-    };
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const handleSignup = () => {
-        // Implement signup logic here, possibly making an API call
-        // If successful, navigate to Home page
-        history.push('/home');
-    };
+    const handleSubmit = async () => {
+        const response = await axios.post(`${urls.BASE_URL}/login`, 
+        {
+            email: email,
+            password: password
+        });
 
-    return (
+        if (response.status === 200) {
+            dispatch(login(response.data));
+            navigate('/home');
+        } else {
+            setMsg("email or password incorrect, please try again");
+        }
+    }
+    return(
         <div>
-            <h1>Login/Sign-up Page</h1>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <button onClick={handleLogin}>Login</button>
-            <button onClick={handleSignup}>Sign Up</button>
+            <h1>Login</h1>
+            <input type="text" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
+            <input type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
+            <button onClick={handleSubmit}>Login</button>
+            <button onClick={() => navigate('/signup')}>Not have an account? Signup</button>
+            <p>{msg}</p>
         </div>
-    );
+    )
 };
-
-export default LoginPage;
