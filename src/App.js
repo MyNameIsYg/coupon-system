@@ -16,16 +16,14 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <BrowserRouter>
-          <Menu />
-          <HomePage {...{ user: { name: "yael" } }} />
-          <Store />
+       
           <Routes>
-            <Route exact path="/" element={<Register />} />
+            <Route exact path="/" element={<Menu />} />
             <Route exact path='/home' element={<HomePage {...{ user: localStorage.getItem('userData') }} onLogout={() => { localStorage.removeItem('user') }} />} />
             <Route exact path='/store' element={<Store />} />
             <Route exact path='/login' element={<Login />} />
             <Route exact path='/signup' element={<Signup />} />
-            {/* Define routes for other pages */}
+         
           </Routes>
         </BrowserRouter>
       </Provider>
