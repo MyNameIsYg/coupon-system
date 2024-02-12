@@ -61,7 +61,7 @@ function Menu() {
                 </Navbar>
             )
                 :
-            nevigate('/login')}
+            nevigate('/login')} 
         </>
     );
 }
