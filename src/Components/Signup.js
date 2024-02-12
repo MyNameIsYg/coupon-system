@@ -16,7 +16,7 @@ export default function Signup(){
     const dispatch = useDispatch();
 
     const handleSubmit = async () => {
-
+        try{
         const response = await axios.post(`${urls.BASE_URL}/signup`, 
         {
             name: name,
@@ -28,6 +28,10 @@ export default function Signup(){
             navigate('/home');
         } else {
             setMsg("email or password incorrect, please try again");
+        }
+        } catch (error) {
+            console.error(error);
+            setMsg("An error occurred. Please try again later.");
         }
     }
 

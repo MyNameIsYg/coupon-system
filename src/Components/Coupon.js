@@ -9,7 +9,7 @@ function Coupon({key, coupon }) {
 
     const handlePurchase = () => {
         axios.put(`${urls.URL_API}/coupon/purchase/${key}`);
-            
+        alert("The coupon has been purchased!");
     }
 
     return (
@@ -18,13 +18,13 @@ function Coupon({key, coupon }) {
             <h1>{coupon.title}</h1>
             <p>{coupon.description}</p>
             <p>
-                <strong>מחיר:</strong> {coupon.price} ש"ח
+                <strong>price:</strong> {coupon.price} $
             </p>
             <p>
-                <strong>תוקף:</strong> {coupon.expirationDate}
+                <strong>end date:</strong> {coupon.expirationDate}
             </p>
-            <button onClick={() => handlePurchase()}>רכישה</button>
-            <button onClick={() => navigate('/home')}>חזרה</button>
+            <button onClick={() => handlePurchase()}>To purchase</button>
+            <button onClick={() => navigate('/home')}>exit</button>
         </div>
     );
 }

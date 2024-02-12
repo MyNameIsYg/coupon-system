@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // import NoProducts from './NoProducts';
 
@@ -11,6 +12,9 @@ function Menu() {
 
     const nevigate = useNavigate();
     const [userDate, setUserData] = useState(JSON.parse(localStorage.getItem('userData')));
+
+    const coupons = useSelector(state => state.coupons);
+    const dispatch = useDispatch();
 
     const isUserLogin = () => {
 
