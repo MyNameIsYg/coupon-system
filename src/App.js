@@ -18,7 +18,7 @@ function App() {
         <BrowserRouter>
        
           <Routes>
-            <Route exact path="/" element={<Menu />} />
+            <Route exact path="/" element={<HomePage/>} />
             <Route exact path='/home' element={<HomePage {...{ user: localStorage.getItem('userData') }} onLogout={() => { localStorage.removeItem('user') }} />} />
             <Route exact path='/store' element={<Store />} />
             <Route exact path='/login' element={<Login />} />
