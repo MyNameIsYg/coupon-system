@@ -25,7 +25,7 @@ function Store() {
         };
         if (loading)
             fetchData(); // Call the async function
-    },[dispatch, loading])
+    },[])
 
 
 

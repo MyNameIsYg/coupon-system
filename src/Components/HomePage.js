@@ -20,13 +20,13 @@ function HomePage({ user, onLogout }) {
 
     // useRef(() => {
 
-    //useEffect(() => {
+    useEffect(() => {
 
-    //     axios.get(`${urls.URL_API}/coupon/customers`).then((response) => {
-    //         setCoupons(response.json);
-    //     });
+        axios.get(`${urls.URL_API}/coupon/customers`).then((response) => {
+            setCoupons(response.json);
+        });
 
-    // }, []);
+    }, []);
 
 
 
