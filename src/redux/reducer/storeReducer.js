@@ -1,12 +1,18 @@
 
+const initialState = {
+    coupons: []
+};
 
+const storeReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case "SET_COUPONS":
+            return {
+                ...state,
+                coupons: action.payload
+            };
+        default:
+            return state;
+    }
+};
 
-const store = [];
-
-
-const storeReducer = (state = store, action) => {
-    
-}
-
-
-export default storeReducer
+export default storeReducer;

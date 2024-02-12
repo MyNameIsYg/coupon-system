@@ -1,14 +1,31 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import urls from './BaseUrl';
+import { setCoupons } from '../redux/action/storeAction';
 
 function Store() {
     const [selectedCoupon, setSelectedCoupon] = useState(null);
 
-    const coupons = useDispatch((state) => state.coupons);
+    const coupons = useSelector((state) => state.coupons);
+    const dispatch = useDispatch();
 
-    useEffect(() => {
-        // TODO: קבלת קופונים זמינים מהשרת
-    }, []);
+
+    useEffect(()=>{
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${urls.URL_API}/coupon/customers/store`);
+                dispatch(setCoupons(response.data)); // Dispatch action to set coupons in the store
+            } catch (error) {
+                console.error('Error fetching coupons:', error);
+            }
+        };
+        fetchData(); // Call the async function
+    })
+
+
+
 
     const handlePurchase = (coupon) => {
         // TODO: שליחת בקשה לרכישת קופון לשרת

@@ -11,3 +11,10 @@ export const addToStore = (coupon) => {
         payload: coupon
     }
 }
+
+export const setCoupons = (coupons) => {
+    return {
+        type: "SET_COUPONS",
+        payload: coupons
+    }
+}
