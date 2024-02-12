@@ -4,6 +4,7 @@ import Coupon from './Coupon';
 import Menu from './Menu';
 import urls from './BaseUrl';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRef } from 'react';
 
 function HomePage({ user, onLogout }) {
     const [coupons, setCoupons] = useState([]);
@@ -13,12 +14,12 @@ function HomePage({ user, onLogout }) {
     const dispatch = useDispatch();
     
 
-    useEffect(() => {
-        axios.get(`${urls.URL_API}/coupon/customers`).then((response) => {
-            setCoupons(response.json);
-        });
+    // useRef(() => {
+    //     axios.get(`${urls.URL_API}/coupon/customers`).then((response) => {
+    //         setCoupons(response.json);
+    //     });
 
-    }, []);
+    // }, []);
 
 
 

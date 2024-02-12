@@ -7,6 +7,7 @@ import { setCoupons } from '../redux/action/storeAction';
 
 function Store() {
     const [selectedCoupon, setSelectedCoupon] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const coupons = useSelector((state) => state.coupons);
     const dispatch = useDispatch();
@@ -19,10 +20,12 @@ function Store() {
                 dispatch(setCoupons(response.data)); // Dispatch action to set coupons in the store
             } catch (error) {
                 console.error('Error fetching coupons:', error);
-            }
+            }            
+            setLoading(false);
         };
-        fetchData(); // Call the async function
-    })
+        if (loading)
+            fetchData(); // Call the async function
+    },[dispatch, loading])
 
 
 
@@ -32,9 +35,13 @@ function Store() {
        // onPurchase(coupon);
     };
 
+    if (loading) {
+        return <div>Loading...</div>; // Render loading indicator while data is being fetched
+    }
+
     return (
         <div className="store-container">
-            <h1>חנות קופונים</h1>
+            <h1>Coupons Store</h1>
             <div className="coupons-container">
                 {coupons.map((coupon) => (
                     <div className="coupon-card" key={coupon.id} onClick={() => handlePurchase(coupon)}>
